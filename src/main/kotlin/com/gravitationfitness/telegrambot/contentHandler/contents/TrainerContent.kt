@@ -24,7 +24,7 @@ class TrainerContent(
     private fun findTrainer(name: String, trainerRepository: TrainerRepository){
         for (trainer in trainerRepository.findAll()){
             if (trainer.name == name){
-                text = "${trainer.name} \n ${trainer.description}"
+                text = ""
             }
         }
     }

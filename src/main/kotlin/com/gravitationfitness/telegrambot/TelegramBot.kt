@@ -5,6 +5,7 @@ import com.gravitationfitness.telegrambot.contentHandler.ContentHistory
 import com.gravitationfitness.telegrambot.contentHandler.RequestHandler
 import com.gravitationfitness.telegrambot.contentHandler.contents.AbstractContent
 import com.gravitationfitness.telegrambot.contentHandler.contents.ContentWithImage
+import com.gravitationfitness.telegrambot.contentHandler.contents.TrainerContent
 import com.gravitationfitness.telegrambot.model.TrainerRepository
 import com.gravitationfitness.telegrambot.model.User
 import com.gravitationfitness.telegrambot.model.UserRepository
@@ -49,7 +50,9 @@ class TelegramBot(private val botConfig: BotConfig): TelegramLongPollingBot() {
                 trainerRepository
             )
 
-            ContentHistory.updateHistory(content)
+            if (content !is TrainerContent) {
+                ContentHistory.updateHistory(content)
+            }
 
             sendMessage(update.message.chatId, content)
         }
@@ -88,7 +91,7 @@ class TelegramBot(private val botConfig: BotConfig): TelegramLongPollingBot() {
 
         sendMessage.chatId = chatId.toString()
         sendMessage.replyMarkup = content.getContentKeyboard()
-        sendMessage.text = content.text
+        if(content.text.isNotEmpty()){sendMessage.text = content.text}
 
         execute(sendMessage)
     }

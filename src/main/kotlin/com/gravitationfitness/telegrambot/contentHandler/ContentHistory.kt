@@ -31,6 +31,17 @@ class ContentHistory private constructor(){
             return historyStack.pop()
         }
 
+        fun getLastContent(): AbstractContent{
+            if (historyStack.size == 0){
+                return MainContent()
+            }
+            return historyStack.first
+        }
+
+        fun deleteLastContent(){
+            historyStack.pop()
+        }
+
     }
 
 }
